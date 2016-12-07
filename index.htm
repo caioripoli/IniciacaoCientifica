@@ -1,0 +1,136 @@
+
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C.A.A</title>
+    <link rel="stylesheet" href="css/feature-carousel.css" charset="utf-8" />
+    <script src="js/jquery-1.7.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/jquery.featureCarousel.min.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+    		
+ 		document.oncontextmenu = function() {return false;};
+
+
+ 		// função principal de tocar a voz
+ 		function tocarVoz(path, pagina) {
+ 			// cria o elemento de audio
+			audio = document.createElement('audio');
+
+			// se o parametro pagina for null, só remove o audio pra limpar o DOM
+			if (pagina === null) {
+				audio.addEventListener("ended", function() {
+				    audio.remove();
+				});
+			}
+			else {
+				// se pagina != null, ao terminar de tocar o audio, mudar a página
+				audio.addEventListener("ended", function() {
+				    window.location = pagina;
+				});
+			}
+			// seta o caminho do audio
+			audio.src = path;
+			audio.autoplay = true;
+			document.body.appendChild(audio);
+			
+ 		}
+
+      	$(document).ready(function() {
+
+      		
+			var carousel = $("#carousel").featureCarousel({
+	          	autoPlay: 0,
+	          	movedToCenter: function($feature) {
+	          		tocarVoz($feature.find('.carousel-image').attr('voz'), null);
+			    }
+			});
+			
+
+      		$(document).mousedown(function(e){
+      			if (e.button == 0) {
+      				$('.carousel-feature').each(function(){
+      					if ($(this).css('z-index') === '4') {
+      						var pagina = $(this).children('.clicavel').attr('pagina');
+      						tocarVoz($(this).children('.clicavel').children('a').children('img').attr('voz'), pagina);
+							
+      					}
+      				});
+      			}
+      		});
+
+      		$(document).on("mousedown",":not(.carousel-feature)",function(e){
+      			if( e.button == 2 ) { 
+			    	carousel.next();
+					//window.location = $(this).attr('pagina');      
+			    } 
+			});
+
+			$('.clicavel').mousedown(function(e){
+
+			    if( e.button == 2 ) { 
+			    	carousel.next();   
+			    } 
+
+			    return true; 
+			 }); 
+
+
+
+				
+	});
+    </script>
+  </head>
+  <body>
+
+		<div class="carousel-container">
+	
+			<div id="carousel">
+				<div class="carousel-feature">
+					<div class="comer clicavel" pagina="paginas/comer.html">
+						<a href="#"><img class="carousel-image" alt="Image Caption" src="images/comer.jpg" voz="audio/comer.mp3"></a>
+						<div class="carousel-caption">
+							<p>Comer</p>
+						</div>
+					</div>
+				</div>
+				<div class="carousel-feature">
+					<div class="beber clicavel" pagina="paginas/beber.html">
+						<a href="#"><img class="carousel-image" alt="Image Caption" src="images/beber.jpg" voz="audio/beber.mp3"></a>
+						<div class="carousel-caption">
+							<p>Beber</p>
+						</div>
+					</div>
+				</div>
+				<div class="carousel-feature">
+					<div class="higiene clicavel" pagina="paginas/higiene.html">
+						<a href="#"><img class="carousel-image" alt="Image Caption" src="images/higiene.jpg" voz="audio/higiene.mp3"></a>
+						<div class="carousel-caption">
+							<p>Higiene</p>
+						</div>
+					</div>
+				</div>
+				<div class="carousel-feature">
+					<div class="sentir clicavel" pagina="paginas/sentir.html">
+						<a href="#"><img class="carousel-image" alt="Image Caption" src="images/sentir.jpg" voz="audio/sentir.mp3"></a>
+						<div class="carousel-caption">
+							<p>Sentir</p>
+						</div>
+					</div>
+				</div>
+				<div class="carousel-feature">
+					<div class="entreterimento clicavel" pagina="paginas/entreterimento.html">
+						<a href="#"><img class="carousel-image" alt="Image Caption" src="images/entreterimento.jpg" voz="audio/entretenimento.wav"></a>
+						<div class="carousel-caption">
+							<p>Video</p>
+						</div>
+					</div>
+				</div>
+			</div>
+    
+		
+		</div>
+  
+  </body>
+</html>

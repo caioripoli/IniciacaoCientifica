@@ -1,0 +1,132 @@
+<script>document.oncontextmenu = function() {return false;};</script>
+
+<h1>Comer !!</h1>
+
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COMER</title>
+    <link rel="stylesheet" href="../css/feature-carousel.css" charset="utf-8" />
+    <script src="../js/jquery-1.7.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../js/jquery.featureCarousel.min.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+    		
+ 		document.oncontextmenu = function() {return false;};
+
+
+ 		// função principal de tocar a voz
+ 		function tocarVoz(path, pagina) {
+ 			// cria o elemento de audio
+			audio = document.createElement('audio');
+
+			// se o parametro pagina for null, só remove o audio pra limpar o DOM
+			if (pagina === null) {
+				audio.addEventListener("ended", function() {
+				    audio.remove();
+				});
+			}
+			else {
+				// se pagina != null, ao terminar de tocar o audio, mudar a página
+				audio.addEventListener("ended", function() {
+				    window.location = pagina;
+				});
+			}
+			// seta o caminho do audio
+			audio.src = path;
+			audio.autoplay = true;
+			document.body.appendChild(audio);
+			
+ 		}
+
+      	$(document).ready(function() {
+
+      		
+			var carousel = $("#carousel").featureCarousel({
+	          	autoPlay: 0,
+	          	movedToCenter: function($feature) {
+	          		tocarVoz($feature.find('.carousel-image').attr('voz'), null);
+			    }
+			});
+			
+
+      		$(document).mousedown(function(e){
+      			if (e.button == 0) {
+      				$('.carousel-feature').each(function(){
+      					if ($(this).css('z-index') === '4') {
+      						var pagina = $(this).children('.comer').attr('pagina');
+      						tocarVoz($(this).children('.clicavel').children('a').children('img').attr('clicar'), pagina);
+							
+      					}
+      				});
+      			}
+      		});
+
+      		$(document).on("mousedown",":not(.carousel-feature)",function(e){
+      			if( e.button == 2 ) { 
+			    	carousel.next();
+					//window.location = $(this).attr('pagina');      
+			    } 
+			});
+
+			$('.clicavel').mousedown(function(e){
+
+			    if( e.button == 2 ) { 
+			    	carousel.next();   
+			    } 
+
+			    return true; 
+			 }); 
+			 
+				
+	});
+    </script>
+  </head>
+
+  
+		<div class="carousel-container">
+    
+			<div id="carousel">
+				<div class="carousel-feature">
+					<div class="comer clicavel" pagina="#">
+						<a href="#"><img class="carousel-image" alt="Image Caption" src="../images/paginas/comer/mingau.jpg" voz="../audio/paginas/comer/mingau.wav" clicar="../audio/botao_d/comer/comerMingau.wav"></a>
+						<div class="carousel-caption">
+							<p>Mingau</p>
+						</div>
+					</div>
+				</div>
+				<div class="carousel-feature">
+					<div class="comer clicavel" pagina="#">
+						<a href="#"><img class="carousel-image" alt="Image Caption" src="../images/paginas/comer/pao.jpg" voz="../audio/paginas/comer/pao.wav" clicar="../audio/botao_d/comer/comerPao.wav"></a>
+						<div class="carousel-caption">
+							<p>Pão</p>
+						</div>
+					</div>
+				</div>
+				<div class="carousel-feature">
+					<div class="comer clicavel" pagina="#">
+						<a href="#"><img class="carousel-image" alt="Image Caption" src="../images/paginas/comer/bolacha.jpg" voz="../audio/paginas/comer/bolacha.wav" clicar="../audio/botao_d/comer/comerBolacha.wav"></a>
+						<div class="carousel-caption">
+							<p>Bolacha</p>
+						</div>
+					</div>
+				</div>
+				<div class="carousel-feature">
+					<div class="comer clicavel" pagina="#">
+						<a href="#"><img class="carousel-image" alt="Image Caption" src="../images/paginas/comer/queijo.jpg" voz="../audio/paginas/comer/queijo.wav" clicar="../audio/botao_d/comer/comerQueijo.wav"></a>
+						<div class="carousel-caption">
+							<p>Queijo</p>
+						</div>
+					</div>
+				</div>
+				<div class="carousel-feature">
+					<div class="comer clicavel" pagina="../index.htm">
+						<a href="#"><img class="carousel-image" alt="Image Caption" src="../images/voltar1.jpg" voz="../audio/voltar.wav" clicar="../audio/voltar.wav"></a>
+						<div class="carousel-caption">
+							<p>Voltar</p>
+						</div>
+					</div>
+				</div>
+			</div>
+    
+		
+		</div>
